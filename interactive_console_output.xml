@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.9.13 on win32)" generated="20230703 09:34:28.603" rpa="false" schemaversion="3">
+<suite id="s1" name="Robot Interactive Console" source="c:\Users\domib\.vscode\extensions\robocorp.robotframework-lsp-1.11.0\src\robotframework_ls\vendored\robotframework_interactive\robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="Log" library="BuiltIn">
+<arg>Done.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230703 12:11:16.430" endtime="20230703 12:11:16.431"/>
+</kw>
+<kw name="Open the robots order web">
+<kw name="Open Available Browser" library="RPA.Browser.Selenium">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<doc>Attempts to open a browser on the user's device from a set of
+supported browsers. Automatically downloads a corresponding webdriver
+if none is already installed.</doc>
+<status status="PASS" starttime="20230703 12:11:16.431" endtime="20230703 12:11:21.033"/>
+</kw>
+<status status="PASS" starttime="20230703 12:11:16.431" endtime="20230703 12:11:21.034"/>
+</kw>
+<kw name="Download the csv file">
+<kw name="Download" library="RPA.HTTP">
+<arg>https://robotsparebinindustries.com/orders.csv</arg>
+<arg>overwrite=True</arg>
+<doc>An alias for the ``HTTP Get`` keyword.</doc>
+<status status="PASS" starttime="20230703 12:11:21.034" endtime="20230703 12:11:21.369"/>
+</kw>
+<status status="PASS" starttime="20230703 12:11:21.034" endtime="20230703 12:11:21.370"/>
+</kw>
+<kw name="Read table from CSV" library="RPA.Tables">
+<var>${orders}</var>
+<arg>orders.csv</arg>
+<doc>Read a CSV file as a table.</doc>
+<msg timestamp="20230703 12:11:21.373" level="INFO">${orders} = Table(columns=['Order number', 'Head', 'Body', 'Legs', 'Address'], rows=20)</msg>
+<status status="PASS" starttime="20230703 12:11:21.370" endtime="20230703 12:11:21.373"/>
+</kw>
+<kw name="Close annoying modal">
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>OK</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" starttime="20230703 12:11:21.374" endtime="20230703 12:11:21.442"/>
+</kw>
+<status status="PASS" starttime="20230703 12:11:21.373" endtime="20230703 12:11:21.442"/>
+</kw>
+<kw name="Fill in robo specs and submit">
+<arg>${orders}</arg>
+<for flavor="IN">
+<var>${Order number}</var>
+<value>@{orders}</value>
+<iter>
+<var name="${Order number}">{'Order number': '1', 'Head': '1', 'Body': '2', 'Legs': '3', 'Address': 'Address 123'}</var>
+<kw name="Fill in robo specs and submit for one person">
+<arg>${Order number}</arg>
+<kw name="Sleep" library="BuiltIn">
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" starttime="20230703 12:11:21.444" endtime="20230703 12:11:22.452"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="RPA.Browser.Selenium">
+<arg>xpath://select[@id='head']</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20230703 12:11:22.453" endtime="20230703 12:11:22.479"/>
+</kw>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>xpath://select[@id='head']</arg>
+<arg>${Order number}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<status status="PASS" starttime="20230703 12:11:22.479" endtime="20230703 12:11:22.559"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${Order number}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<status status="PASS" starttime="20230703 12:11:22.560" endtime="20230703 12:11:22.619"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//input[@class='form-control' and @type='number']</arg>
+<arg>${Order number}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" starttime="20230703 12:11:22.619" endtime="20230703 12:11:22.703"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//input[@class='form-control' and @type='text']</arg>
+<arg>${Order number}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" starttime="20230703 12:11:22.704" endtime="20230703 12:11:22.805"/>
+</kw>
+<kw name="Click Button When Visible" library="RPA.Browser.Selenium">
+<arg>order</arg>
+<doc>Click button identified by ``locator``, once it becomes visible.</doc>
+<status status="PASS" starttime="20230703 12:11:22.805" endtime="20230703 12:11:22.913"/>
+</kw>
+<kw name="Place order again">
+<kw name="Set Variable" library="BuiltIn">
+<var>${Error handling}</var>
+<arg>${False}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230703 12:11:22.914" level="INFO">${Error handling} = False</msg>
+<status status="PASS" starttime="20230703 12:11:22.914" endtime="20230703 12:11:22.915"/>
+</kw>
+<kw name="Alert Should Not Be Present" library="RPA.Browser.Selenium">
+<var>${Error handling}</var>
+<arg>${True}</arg>
+<doc>Verifies that no alert is present.</doc>
+<msg timestamp="20230703 12:11:28.024" level="INFO">${Error handling} = None</msg>
+<status status="PASS" starttime="20230703 12:11:22.915" endtime="20230703 12:11:28.025"/>
+</kw>
+<if>
+<branch type="IF" condition="${Error handling} == ${True}">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>3</arg>
+<arg>0.5 sec</arg>
+<arg>Click Button</arg>
+<arg>order</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="NOT RUN" starttime="20230703 12:11:28.025" endtime="20230703 12:11:28.026"/>
+</kw>
+<status status="NOT RUN" starttime="20230703 12:11:28.025" endtime="20230703 12:11:28.026"/>
+</branch>
+<status status="PASS" starttime="20230703 12:11:28.025" endtime="20230703 12:11:28.026"/>
+</if>
+<status status="PASS" starttime="20230703 12:11:22.913" endtime="20230703 12:11:28.026"/>
+</kw>
+<kw name="Click Button When Visible" library="RPA.Browser.Selenium">
+<arg>xpath://button[@id='order-another']</arg>
+<doc>Click button identified by ``locator``, once it becomes visible.</doc>
+<status status="PASS" starttime="20230703 12:11:28.026" endtime="20230703 12:11:28.145"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" starttime="20230703 12:11:28.145" endtime="20230703 12:11:30.152"/>
+</kw>
+<kw name="Close annoying modal">
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>OK</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" starttime="20230703 12:11:30.154" endtime="20230703 12:11:30.206"/>
+</kw>
+<status status="PASS" starttime="20230703 12:11:30.153" endtime="20230703 12:11:30.206"/>
+</kw>
+<status status="PASS" starttime="20230703 12:11:21.443" endtime="20230703 12:11:30.207"/>
+</kw>
+<status status="PASS" starttime="20230703 12:11:21.443" endtime="20230703 12:11:30.207"/>
+</iter>
+<iter>
+<var name="${Order number}">{'Order number': '2', 'Head': '4', 'Body': '1', 'Legs': '5', 'Address': 'Address 456'}</var>
+<kw name="Fill in robo specs and submit for one person">
+<arg>${Order number}</arg>
+<kw name="Sleep" library="BuiltIn">
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" starttime="20230703 12:11:30.207" endtime="20230703 12:11:31.215"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="RPA.Browser.Selenium">
+<arg>xpath://select[@id='head']</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20230703 12:11:31.215" endtime="20230703 12:11:31.234"/>
+</kw>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>xpath://select[@id='head']</arg>
+<arg>${Order number}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
